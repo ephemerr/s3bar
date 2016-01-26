@@ -19,9 +19,6 @@ MainWindow::MainWindow(ListService* serv, QWidget *parent) :
 
     ini = new QSettings("/home/me/projects/s3bar/s3cfg.ini", QSettings::IniFormat);
 
-    connect( ui->tableView,     SIGNAL(doubleClicked(QModelIndex)),
-             this,              SLOT(commandChDir(QModelIndex))
-             );
     connect( this,              SIGNAL(command(QString)),
              serv,              SLOT(command(QString))
            );
@@ -39,14 +36,6 @@ MainWindow::MainWindow(ListService* serv, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void
-MainWindow::commandChDir(QModelIndex ind) {
-    int row = ind.row();
-    const QModelIndex nameind = ind.sibling(row,Panel::COL_NAME);
-    QString name = ui->tableView->model()->data(nameind).toString();
-    emit command(name);
 }
 
 void
@@ -74,8 +63,16 @@ MainWindow::on_newSettings(QString ak, QString sk) {
     //ini->setValue("default/secret_key","ZLE4fKwQvQ5Q2yx2uI7g5QX8O/ANhW5OI2n2WXIN");
 }
 
-void
-MainWindow::on_pushButton_clicked()
+void MainWindow::on_lineEdit_returnPressed()
 {
     emit command(ui->lineEdit->text());
+}
+
+
+void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    int row = index.row();
+    const QModelIndex nameind = index.sibling(row,Panel::COL_NAME);
+    QString name = ui->tableView->model()->data(nameind).toString();
+    emit command(name);
 }

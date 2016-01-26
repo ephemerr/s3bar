@@ -21,11 +21,12 @@ private:
     QSettings *ini;
 
 private slots:    
-    void commandChDir(QModelIndex);
     void receiveListing(QString,QString);
 
     void on_pushButton_2_clicked();
-    void on_pushButton_clicked();
+    void on_lineEdit_returnPressed();
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
 public slots:
     void on_newSettings(QString ak, QString sk);
 
