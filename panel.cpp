@@ -72,6 +72,6 @@ Panel::receiveListing(QString path, QString listchunk) {
     list = PanelEntry::parse(listchunk);
     QModelIndex ind = index(0,0);
 
-    emit dataChanged( ind,/// redraw signal
+    emit dataChanged( ind.sibling(0,0),/// redraw signal
                       ind.sibling(list.length()-1,COL_NAME));
 }

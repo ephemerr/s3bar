@@ -16,11 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     panel.cpp \
     listservice.cpp \
-    panelentry.cpp
+    panelentry.cpp \
+    dialogkeys.cpp
 
 HEADERS  += mainwindow.h \
     panel.h \
     listservice.h \
-    panelentry.h
+    panelentry.h \
+    dialogkeys.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialogkeys.ui

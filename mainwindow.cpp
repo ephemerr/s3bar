@@ -2,12 +2,13 @@
 #include "ui_mainwindow.h"
 
 #include "panel.h"
+#include "dialogkeys.h"
 
 MainWindow::MainWindow(ListService* serv, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    ui->setupUi(this);    
 
     Panel *lpanel = new Panel(this);
     ui->tableView->setModel(lpanel);
@@ -16,11 +17,10 @@ MainWindow::MainWindow(ListService* serv, QWidget *parent) :
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #endif
 
+    ini = new QSettings("/home/me/projects/s3bar/s3cfg.ini", QSettings::IniFormat);
+
     connect( ui->tableView,     SIGNAL(doubleClicked(QModelIndex)),
              this,              SLOT(commandChDir(QModelIndex))
-             );
-    connect( ui->pushButton,    SIGNAL(clicked()),
-             this,              SLOT(commandRun())
              );
     connect( this,              SIGNAL(command(QString)),
              serv,              SLOT(command(QString))
@@ -31,16 +31,14 @@ MainWindow::MainWindow(ListService* serv, QWidget *parent) :
     connect( serv,              SIGNAL(receiveListing(QString,QString)),
              this,              SLOT(receiveListing(QString,QString))
              );
+
+    ui->lineEdit->setText("s3://cbldev");
+    emit command(ui->lineEdit->text());
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void
-MainWindow::commandRun() {
-    emit command(ui->lineEdit->text());
 }
 
 void
@@ -57,13 +55,27 @@ MainWindow::receiveListing(QString dir,QString listing) {
 }
 
 void
-readKeys() {
-    QFile data("s3.conf");
-    if (!data.open(QFile::ReadOnly)) {
-        qDebug() << "Could not open file.";
-        return;
-    }
-    QString line;
-    QRegExp exp = QRegExp("AccessKey: [A-Za-z0-9]+");
-    line = data.readLine();
+MainWindow::on_pushButton_2_clicked()
+{
+    QString ak = ini->value("default/access_key").toString();
+    QString sk = ini->value("default/secret_key").toString();
+    DialogKeys d(ak, sk);
+    connect(&d,         SIGNAL( newSettings(QString, QString) ),
+            this,       SLOT ( on_newSettings(QString, QString))
+                               );
+    d.exec();
+}
+
+void
+MainWindow::on_newSettings(QString ak, QString sk) {
+    ini->setValue("default/access_key",ak);
+    ini->setValue("default/secret_key",sk);
+    //ini->setValue("default/access_key","AKIAJBHJ7LQ4MJSYFBFQ");
+    //ini->setValue("default/secret_key","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");
+}
+
+void
+MainWindow::on_pushButton_clicked()
+{
+    emit command(ui->lineEdit->text());
 }

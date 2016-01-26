@@ -18,11 +18,16 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QSettings *ini;
 
-private slots:
-    void commandRun();
+private slots:    
     void commandChDir(QModelIndex);
     void receiveListing(QString,QString);
+
+    void on_pushButton_2_clicked();
+    void on_pushButton_clicked();
+public slots:
+    void on_newSettings(QString ak, QString sk);
 
 signals:
     void command(QString str);
