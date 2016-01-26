@@ -12,8 +12,7 @@ ListService::~ListService()
 
 void ListService::command(QString str) {
 
-    QString cmnd = QString("s3cmd ls %1").arg(str);
-    //cmnd = QString("s3cmd ls s3://cbldev");
+    QString cmnd = QString("s3cmd -c s3cfg.ini ls %1").arg(str);
 
     QProcess proc;
     proc.start(cmnd);
