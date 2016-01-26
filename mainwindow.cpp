@@ -55,3 +55,15 @@ void
 MainWindow::receiveListing(QString dir,QString listing) {
     ui->lineEdit->setText(dir);
 }
+
+void
+readKeys() {
+    QFile data("s3.conf");
+    if (!data.open(QFile::ReadOnly)) {
+        qDebug() << "Could not open file.";
+        return;
+    }
+    QString line;
+    QRegExp exp = QRegExp("AccessKey: [A-Za-z0-9]+");
+    line = data.readLine();
+}
