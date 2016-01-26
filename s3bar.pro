@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     panel.cpp \
-    listservice.cpp
+    listservice.cpp \
+    panelentry.cpp
 
 HEADERS  += mainwindow.h \
     panel.h \
-    listservice.h
+    listservice.h \
+    panelentry.h
 
 FORMS    += mainwindow.ui

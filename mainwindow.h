@@ -19,6 +19,11 @@ public:
 private:
     Ui::MainWindow *ui;
 
+private slots:
+    void commandRun();
+    void commandChDir(QModelIndex);
+    void receiveListing(QString,QString);
+
 signals:
     void command(QString str);
 };

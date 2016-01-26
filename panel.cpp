@@ -2,50 +2,57 @@
 
 #include <QDebug>
 
-LPanel::LPanel(QObject *parent)
+Panel::Panel(QObject *parent)
 : QAbstractTableModel(parent)
 {
-
+    QFile data("../s3bar/1.ls");
+    if (!data.open(QFile::ReadOnly)) {
+        qDebug() << "Could not open file.";
+        return;
+    }
+    receiveListing("",data.readAll());
 }
 
-LPanel::~LPanel()
+Panel::~Panel()
 {
 
 }
 
 QVariant
-LPanel::data(const QModelIndex &index, int role) const
+Panel::data(const QModelIndex &index, int role) const
 {
-
     if (!index.isValid() ||
             index.row() >= rowCount() ||
-            index.row() >= COL_COUNT)
+            index.column() >= COL_COUNT)
         return QVariant();
 
     if (role == Qt::DisplayRole) {
         return list[index.row()][index.column()];
     }
 
+    if (role == Qt::TextAlignmentRole && index.column() == 1) {
+        return Qt::AlignRight;
+    }
+
     return QVariant();
 }
 
 int
-LPanel::rowCount(const QModelIndex &parent) const
+Panel::rowCount(const QModelIndex &parent) const
 {
     (void)parent;
     return list.length();
 }
 
 int
-LPanel::columnCount(const QModelIndex &parent) const
+Panel::columnCount(const QModelIndex &parent) const
 {
     (void)parent;
     return COL_COUNT;
 }
 
-
 QVariant
-LPanel::headerData(int section, Qt::Orientation orientation, int role) const
+Panel::headerData(int section, Qt::Orientation orientation, int role) const
 {
    const char* header_data[] =  { "Изменен", "Размер", "Файл"};
 
@@ -55,13 +62,16 @@ LPanel::headerData(int section, Qt::Orientation orientation, int role) const
    if(orientation == Qt::Horizontal && role == Qt::DisplayRole) {
        Q_ASSERT(section < COL_COUNT);
        return QString::fromUtf8(header_data[section]); // заголовки столбцов
-   } else {
-       return QString("%1").arg( section + 1 ); // возвращаем номера строк
    }
+   return QVariant();
 }
 
 void
-LPanel::receiveListing(QString path, QString list) {
-    qDebug() << path;
-    qDebug() << list;
+Panel::receiveListing(QString path, QString listchunk) {
+    list.clear();
+    list = PanelEntry::parse(listchunk);
+    QModelIndex ind = index(0,0);
+
+    emit dataChanged( ind,/// redraw signal
+                      ind.sibling(list.length()-1,COL_NAME));
 }

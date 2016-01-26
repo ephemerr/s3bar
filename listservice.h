@@ -9,6 +9,7 @@ public:
     ListService();
     ~ListService();
 public slots:
+    void run();
     void command(QString str);
 signals:
     void receiveListing(QString path, QString list);
