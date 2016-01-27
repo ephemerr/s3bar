@@ -6,18 +6,34 @@ PanelEntry::~PanelEntry()
 {
 }
 
+//PanelEntry::PanelEntryP(QString line)
+//{
+//    const char* data = line.toLatin1().data();
+//    isdir = data[23] == 'D' ? 1 : 0;
+//    int namestarts = strstr(data, "s3") - data;
+//    name = line.mid(namestarts,line.length()-namestarts);
+//    if ( ! isdir ) {
+//        date = line.mid(0,16);
+//        size = line.mid(17, namestarts-17);
+//    }
+//    else {
+//        date=size="";
+//    }
+//}
+
 PanelEntry::PanelEntry(QString line)
 {
     const char* data = line.toLatin1().data();
-    isdir = data[23] == 'D' ? 1 : 0;
-    int namestarts = strstr(data, "s3") - data;
-    name = line.mid(namestarts,line.length()-namestarts);
+    isdir = data[13] == ':' ? 1 : 0;
+
     if ( ! isdir ) {
-        date = line.mid(0,16);
-        size = line.mid(17, namestarts-17);
+        name = line.mid(0, line.length()-29);
+        date = line.mid(line.length()-27,20);
+        size = line.mid(line.length()-5, 5);
     }
     else {
         date=size="";
+        name = line.mid(0, line.length());
     }
 }
 

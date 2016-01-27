@@ -5,12 +5,7 @@
 Panel::Panel(QObject *parent)
 : QAbstractTableModel(parent)
 {
-    QFile data("../s3bar/1.ls");
-    if (!data.open(QFile::ReadOnly)) {
-        qDebug() << "Could not open file.";
-        return;
-    }
-    receiveListing("",data.readAll());
+
 }
 
 Panel::~Panel()

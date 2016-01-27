@@ -17,8 +17,8 @@ public:
     ~PanelEntry();
     QVariant value(int colum);
     void print();
-    static QList<PanelEntry> parse(QString str);
     QVariant operator[](int)  const;
+    static QList<PanelEntry> parse(QString str);
 };
 
 #endif // PANELENTRY_H

@@ -8,7 +8,7 @@ MainWindow::MainWindow(ListService* serv, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);    
+    ui->setupUi(this);
 
     Panel *lpanel = new Panel(this);
     ui->tableView->setModel(lpanel);
@@ -28,9 +28,6 @@ MainWindow::MainWindow(ListService* serv, QWidget *parent) :
     connect( serv,              SIGNAL(receiveListing(QString,QString)),
              this,              SLOT(receiveListing(QString,QString))
              );
-
-    ui->lineEdit->setText("s3://cbldev");
-    emit command(ui->lineEdit->text());
 }
 
 MainWindow::~MainWindow()
