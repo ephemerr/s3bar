@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include "panelentry.h"
+#include "libs3.h"
 
 
 class Panel : public QAbstractTableModel
@@ -22,8 +23,9 @@ public:
     int rowCount(const QModelIndex &parent=QModelIndex()) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant headerData(int section,Qt::Orientation orientation, int role=Qt::DisplayRole) const;
+private:
 public slots:
-    void receiveListing(QString path, QString list);
+    void command(QString str, const char* ,const char* );
 };
 
 #endif // LPANEL_H

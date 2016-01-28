@@ -13,16 +13,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(ListService* serv, QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
     QSettings *ini;
+    void request(QString str);
 
-private slots:    
-    void receiveListing(QString,QString);
-
+private slots:
     void on_pushButton_2_clicked();
     void on_lineEdit_returnPressed();
     void on_tableView_doubleClicked(const QModelIndex &index);
@@ -31,7 +30,7 @@ public slots:
     void on_newSettings(QString ak, QString sk);
 
 signals:
-    void command(QString str);
+    void command(QString str,const char* ,const char* );
 };
 
 #endif // MAINWINDOW_H

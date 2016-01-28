@@ -14,6 +14,7 @@ private:
     bool isdir;
 public:
     PanelEntry(QString);
+    PanelEntry(QString,QString,QString,bool);
     ~PanelEntry();
     QVariant value(int colum);
     void print();

@@ -11,16 +11,9 @@ int main(int argc, char *argv[])
     qputenv("S3_ACCESS_KEY_ID","AKIAJBHJ7LQ4MJSYFBFQ");
 
     QApplication a(argc, argv);
+    setlocale(LC_ALL,"C");
 
-    ListService *serv = new ListService;
-    QThread t(&a);
-    serv->moveToThread(&t);
-    a.connect(&t,       SIGNAL(started()),
-              serv,     SLOT(run())
-              );
-
-    t.start();
-    MainWindow w(serv);
+    MainWindow w;
     w.showMaximized();
 
     return a.exec();

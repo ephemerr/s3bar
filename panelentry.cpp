@@ -6,6 +6,15 @@ PanelEntry::~PanelEntry()
 {
 }
 
+PanelEntry::PanelEntry(QString size,QString name,QString date,bool isdir) :
+    size(size),
+    name(name),
+    date(date),
+    isdir(isdir)
+{
+
+}
+
 //PanelEntry::PanelEntryP(QString line)
 //{
 //    const char* data = line.toLatin1().data();
@@ -33,7 +42,7 @@ PanelEntry::PanelEntry(QString line)
     }
     else {
         date=size="";
-        name = line.mid(0, line.length());
+        name = line.mid(15, line.length());
     }
 }
 
@@ -67,6 +76,9 @@ QList<PanelEntry> PanelEntry::parse(QString str) {
     int i=0;
     for(i=0; i<PARSER_MAX_LINES; i++) {
         QString line = chunk.readLine(PARSER_MAX_LINE_LEN);
+        if (line == "") {
+            continue;
+        }
         if (line == NULL) {
             break;
         }

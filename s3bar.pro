@@ -15,15 +15,19 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     panel.cpp \
-    listservice.cpp \
     panelentry.cpp \
-    dialogkeys.cpp
+    dialogkeys.cpp \
+    lister.cpp
 
 HEADERS  += mainwindow.h \
     panel.h \
-    listservice.h \
     panelentry.h \
-    dialogkeys.h
+    dialogkeys.h \
+    lister.h
 
 FORMS    += mainwindow.ui \
     dialogkeys.ui
+
+LIBS += -ls3 #-L$$PWD/libs3/build/lib -L/usr/lib/i386-linux-gnu -lcurl -lxml2
+
+INCLUDEPATH += #$$PWD/libs3/inc -I/usr/include/libxml2

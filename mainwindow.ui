@@ -37,6 +37,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QTableView" name="tableView">
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
         <property name="showGrid">
          <bool>false</bool>
         </property>
