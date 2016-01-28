@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "listservice.h"
 
 int main(int argc, char *argv[])
 {

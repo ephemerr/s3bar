@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "listservice.h"
+#include <QtCore>
 
 namespace Ui {
 class MainWindow;
